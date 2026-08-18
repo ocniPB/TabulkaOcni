@@ -45,15 +45,16 @@
       font-weight: bold;
       border-radius: 10px;
       margin-bottom: 70px;
+      cursor: pointer;
     }
 
-      .description2 {
+    .description2 {
       margin-top: 30px;
-        font-size: 18px;
+      font-size: 18px;
       margin-bottom: 30px;
     }
-      
-      .description3 {
+
+    .description3 {
       font-size: 18px;
       margin-bottom: 20px;
     }
@@ -105,18 +106,51 @@
       border-radius: 40px;
     }
 
-    .notice {
-      margin-top: 30px;
-      padding: 15px;
-      background: #fff3cd;
-      border-radius: 10px;
-      font-size: 16px;
+    /* Okno s heslem */
+
+    #passwordBox {
+      display: none;
+      margin-top: 25px;
+      padding: 25px;
+      background: #f8f8f8;
+      border-radius: 12px;
     }
 
-    .notice-title {
-      font-weight: bold;
-      margin-bottom: 8px;
+    #passwordBox h2 {
+      margin-top: 0;
+      font-size: 20px;
     }
+
+    #password {
+      width: 90%;
+      box-sizing: border-box;
+      padding: 14px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .passwordButton {
+      width: 90%;
+      padding: 14px;
+      background: #1D6F42;
+      color: white;
+      border: none;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #error {
+      color: #c00000;
+      font-weight: bold;
+      margin-top: 12px;
+      display: none;
+    }
+
   </style>
 </head>
 
@@ -130,15 +164,40 @@
       Kliknutím vyberte.
     </div>
 
-    <a class="button"
-       href="https://1drv.ms/x/c/9124d54ad59bd03c/IQA4VB66i3HaTJrcFRRqBe3RAek_HMw5tnLF_YXaWXsLtuU?e=la8R1A">
-       OTEVŘÍT TABULKU
+    <!-- TLAČÍTKO TABULKY -->
+
+    <a class="button" onclick="showPassword()">
+      OTEVŘÍT TABULKU
     </a>
+
+    <!-- HESLO -->
+
+    <div id="passwordBox">
+
+      <h2>🔒 Přístup k tabulce</h2>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Zadejte přístupový kód"
+        onkeydown="if(event.key === 'Enter') checkPassword()"
+      >
+
+      <button class="passwordButton" onclick="checkPassword()">
+        POKRAČOVAT
+      </button>
+
+      <div id="error">
+        Nesprávný přístupový kód.
+      </div>
+
+    </div>
+
 
     <div class="description2">
       ________________________________________
     </div>
-    
+
     <div class="description3">
       Odkazy:
     </div>
@@ -152,7 +211,7 @@
        href="https://obj.onp.cz/">
        Obědy
     </a>
-    
+
     <a class="button2"
        href="https://cvrs.cz/#pohotovost-kalendar">
        Vitreoretinální pohotovost
@@ -163,9 +222,10 @@
        Klinické semináře VFN
     </a>
 
-    
-    <!-- 
-    ZDE MŮŽETE NAPSAT POZNÁMKU 
+
+    <!--
+    ZDE MŮŽETE NAPSAT POZNÁMKU
+
     <div class="notice">
       <div class="notice-title">⚠️ UPOZORNĚNÍ</div>
       <p></p>
@@ -173,6 +233,51 @@
     -->
 
   </div>
+
+
+  <script>
+
+    // ADRESA EXCELU
+    const excelUrl = "https://1drv.ms/x/c/9124d54ad59bd03c/IQA4VB66i3HaTJrcFRRqBe3RAek_HMw5tnLF_YXaWXsLtuU?e=la8R1A";
+
+    // HESLO
+    const correctPassword = "oct";
+
+
+    // ZOBRAZÍ OKNO S HESLEM
+
+    function showPassword() {
+
+      document.getElementById("passwordBox").style.display = "block";
+
+      document.getElementById("password").focus();
+
+    }
+
+
+    // KONTROLA HESLA
+
+    function checkPassword() {
+
+      const password = document.getElementById("password").value;
+
+      if (password === correctPassword) {
+
+        window.location.href = excelUrl;
+
+      } else {
+
+        document.getElementById("error").style.display = "block";
+
+        document.getElementById("password").value = "";
+
+        document.getElementById("password").focus();
+
+      }
+
+    }
+
+  </script>
 
 </body>
 </html>
